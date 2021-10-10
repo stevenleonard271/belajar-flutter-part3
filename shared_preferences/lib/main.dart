@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,6 +13,22 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   TextEditingController controller = TextEditingController(text: "No Name");
   bool isON;
+
+  void saveData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("nama", controller.text);
+    preferences.setBool("value", isON);
+  }
+
+  Future<String> getNama() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString("nama") ?? " No Name";
+  }
+
+  Future<bool> getON() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool("value") ?? "No Value";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +51,28 @@ class _MyAppState extends State<MyApp> {
                 isON = newValue;
               });
             },
+          ),
+          RaisedButton(
+            onPressed: () {
+              saveData();
+            },
+            child: Text('Save'),
+          ),
+          RaisedButton(
+            onPressed: () {
+              getNama().then((s) {
+                controller.text = s;
+                setState(() {});
+              });
+
+              getON().then((b) {
+                isON = b;
+                setState(() {
+                  
+                });
+              });
+            },
+            child: Text('Load'),
           )
         ],
       )),
