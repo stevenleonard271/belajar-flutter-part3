@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(MyApp());
@@ -55,6 +56,7 @@ class _MyAppState extends State<MyApp> {
           RaisedButton(
             onPressed: () {
               saveData();
+              savedToast();
             },
             child: Text('Save'),
           ),
@@ -67,15 +69,20 @@ class _MyAppState extends State<MyApp> {
 
               getON().then((b) {
                 isON = b;
-                setState(() {
-                  
-                });
+                setState(() {});
               });
+              loadedToast();
             },
             child: Text('Load'),
           )
         ],
       )),
     ));
+  }
+  void savedToast() {
+    Fluttertoast.showToast(msg: "Your data has been saved", fontSize: 18);
+  }
+  void loadedToast(){
+    Fluttertoast.showToast(msg: "Your data has been loaded", fontSize: 18);
   }
 }
