@@ -17,31 +17,53 @@ class MyApp extends StatelessWidget {
           title: Text('Custom Progress Bar'),
         ),
         body: Center(
-          child: ChangeNotifierProvider<TimeState>(
+          child: ChangeNotifierProvider(
             create: (context) => TimeState(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Consumer<TimeState>(
-                    builder: (context, timeState, _) => CustomProgressBar(
-                        width: 200, value: timeState.time, totalValue: 15)),
-                SizedBox(height: 10),
+                  builder: (context, timeState, _) => CustomProgressBar(
+                    width: 200,
+                    value: timeState.time,
+                    totalValue: 15,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
                 Consumer<TimeState>(
-                  builder: (context, timeState, _) => RaisedButton(
-                    onPressed: () {
-                      Timer.periodic(Duration(seconds: 1), (timer) {
-                        if (timeState.time == 0)
-                          timer.cancel();
-                        else
-                          timeState.time -= 1;
-                      });
-                    },
-                    child: Text(
-                      'Start',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.lightBlue,
+                  builder: (context, timeState, _) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RaisedButton(
+                        onPressed: () {
+                          Timer.periodic(Duration(milliseconds: 500), (timer) {
+                            if (timeState.time == 0)
+                              timer.cancel();
+                            else
+                              timeState.time -= 1;
+                          });
+                        },
+                        color: Colors.blue,
+                        child: Text(
+                          'Start',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      RaisedButton(
+                        onPressed: () {
+                          timeState.time = 15;
+                        },
+                        color: Colors.red,
+                        child: Text(
+                          'Reset',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               ],

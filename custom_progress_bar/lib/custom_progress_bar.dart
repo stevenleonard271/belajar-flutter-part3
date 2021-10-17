@@ -6,7 +6,6 @@ class CustomProgressBar extends StatelessWidget {
   final int totalValue;
 
   CustomProgressBar({this.width, this.value, this.totalValue});
-
   @override
   Widget build(BuildContext context) {
     double ratio = value / totalValue;
@@ -14,23 +13,23 @@ class CustomProgressBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(Icons.timer, color: Colors.grey[700]),
-        SizedBox(width: 5),
+        SizedBox(
+          width: 5,
+        ),
         Stack(
           children: [
             Container(
               width: width,
               height: 10,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(5),
-              ),
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(5)),
             ),
             Material(
               borderRadius: BorderRadius.circular(5),
-              elevation: 3,
               child: AnimatedContainer(
-                height: 10,
                 width: width * ratio,
+                height: 10,
                 duration: Duration(milliseconds: 500),
                 decoration: BoxDecoration(
                     color: (ratio < 0.3)
